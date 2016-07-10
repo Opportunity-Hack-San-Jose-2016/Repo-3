@@ -93,15 +93,17 @@
 		currentPin = marker.getLatLng()
 		var comment = $("#comment").val();
 		$("#comment").val('');
-		L.circle(currentPin, 70, {
+		var geoL= L.circle(currentPin, 70, {
 			color: getColorCode(tag),
 			fillColor: getColorCode(tag),
 			fillOpacity: 1
-		}).addTo(mymap).bindPopup('#'+tag);
+		}).addTo(mymap).bindPopup('#'+tag).toGeoJSON();
 
 		mymap.clearAllEventListeners();
 
 		creatTweet({tag:tag,location: currentPin});
+
+		console.dir(geoL);
 
 		console.dir({ 'logLat':  currentPin, 'tag': tag })
 		// $.post('/tweet', { tweet:Tweet }, function(data){
@@ -183,7 +185,26 @@ var creatTweet = function(o){
 
             _t = _t + '#'+city + ' #'+ state +' #MercyCorp';
              $.post('/tweet', { tweet:_t }, function(data){
-				alert("tweeted ;) "+_t);
+				// alert("tweeted ;) "+_t);
+				toastr["info"](_t, "Tweeted")
+
+				toastr.options = {
+				  "closeButton": false,
+				  "debug": false,
+				  "newestOnTop": false,
+				  "progressBar": false,
+				  "positionClass": "toast-top-center",
+				  "preventDuplicates": false,
+				  "onclick": null,
+				  "showDuration": "30000",
+				  "hideDuration": "1000",
+				  "timeOut": "5000",
+				  "extendedTimeOut": "1000",
+				  "showEasing": "swing",
+				  "hideEasing": "linear",
+				  "showMethod": "fadeIn",
+				  "hideMethod": "fadeOut"
+				}
 			});
           }
         };
