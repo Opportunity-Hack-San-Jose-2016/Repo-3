@@ -9,6 +9,7 @@
 // function LoadMap(position) {
 // // x.innerHTML = "Latitude: " + position.coords.latitude + "<br>Longitude: " + position.coords.longitude; 
 	var _t;
+	var _geoL;
 	$('#mapid').css('height', $(window).innerHeight() );
 	// $('#layover').css('height', $(window).innerHeight() );
 	$(window).resize(function(){
@@ -94,17 +95,19 @@ var temp = {type: "Feature", properties: {}, geometry: {type: "Point", coordinat
 		currentPin = marker.getLatLng()
 		var comment = $("#comment").val();
 		$("#comment").val('');
-		var geoL= L.circle(currentPin, 70, {
+		_geoL= L.circle(currentPin, 70, {
 			color: getColorCode(tag),
 			fillColor: getColorCode(tag),
 			fillOpacity: 1
-		}).addTo(mymap).bindPopup('#'+tag);
+		}).addTo(mymap).bindPopup('#'+tag).toGeoJSON();
+
+		_geoL.properties={tag:tag};
 
 		// mymap.clearAllEventListeners();
 
 		creatTweet({tag:tag,location: currentPin});
 
-		// console.dir(geoL);
+		console.log(JSON.stringify(_geoL));
 
 		console.dir({ 'logLat':  currentPin, 'tag': tag })
 		// $.post('/tweet', { tweet:Tweet }, function(data){
@@ -185,7 +188,7 @@ var creatTweet = function(o){
 
 
             _t = _t + '#'+city + ' #'+ state +' #MercyCorp';
-             $.post('/tweet', { tweet:_t }, function(data){
+             $.post('/tweet', { tweet:_t, _geoL }, function(data){
 				// alert("tweeted ;) "+_t);
 				toastr["info"](_t, "Tweeted")
 
@@ -206,6 +209,9 @@ var creatTweet = function(o){
 				  "showMethod": "fadeIn",
 				  "hideMethod": "fadeOut"
 				}
+
+				console.log(data);
+				// fillMap(data);
 			});
           }
         };
@@ -215,14 +221,37 @@ var creatTweet = function(o){
 
 
 
+var fillMap= function(data){
+	console.log(data.length);
+	for(var key in data ){
+
+		// console.log(data[key]);
+		console.dir(jQuery.parseJSON(data[key]));
+		var temp = jQuery.parseJSON(data[key]);
+		console.log(temp.geometry.coordinates[0].toFixed(2));
+		console.log(temp.geometry.coordinates[1].toFixed(2));
+		console.log(temp.properties.tag);
+		var c =temp.geometry.coordinates;
+		var la = temp.geometry.coordinates[0].toFixed(1);
+		var ll = temp.geometry.coordinates[1].toFixed(1);
+		c = [+ll,+la ];
+		console.log(c);
+		L.circle( c, 70, {
+		// L.circle( [37.3, -121.9] , 70, {
+
+			color: getColorCode(temp.properties.tag),
+			fillColor: getColorCode(temp.properties.tag),
+			fillOpacity: 1
+		}).addTo(mymap).bindPopup('#'+ temp.properties.tag);
+
+	}
+};
 
 
-
-
-
-
-
-
+$.post('/getpoints', {}, function(data){
+				console.log(data.length);
+				fillMap(data);
+			});
 
 
 
