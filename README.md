@@ -1,6 +1,12 @@
 # GLADMap
 GladMAP is an Open-Source Solution to obtaining MAP Data using the assistance of Leaflet, OpenStreetMap, & Twitter APIs
 
+Documentation:
+https://da.gd/oh2016
+
+Live Servers:
+https://da.gd/oh1
+
 # Requirements
 1. Ubuntu 14.04 Server
 2. This Github Repo
