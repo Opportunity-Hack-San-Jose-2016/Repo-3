@@ -12,8 +12,8 @@
 # Update Server
 apt-get update -y && apt-get upgrade -y
 # Install Git
-apt-get install git -y
-git clone https://github.com/Opportunity-Hack-San-Jose-2016/Repo-3.git
+# apt-get install git -y
+# git clone https://github.com/Opportunity-Hack-San-Jose-2016/Repo-3.git
 # Installs Docker
 curl -sSL https://get.docker.com/ | sh
 # Download Docker Repo
