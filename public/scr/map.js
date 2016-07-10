@@ -222,19 +222,19 @@ var creatTweet = function(o){
 
 
 var fillMap= function(data){
-	console.log(data.length);
+	console.log("this the length"+data.length);
 	for(var key in data ){
 
 		// console.log(data[key]);
 		console.dir(jQuery.parseJSON(data[key]));
 		var temp = jQuery.parseJSON(data[key]);
-		console.log(temp.geometry.coordinates[0].toFixed(2));
-		console.log(temp.geometry.coordinates[1].toFixed(2));
-		console.log(temp.properties.tag);
-		var c =temp.geometry.coordinates;
-		var la = temp.geometry.coordinates[0].toFixed(1);
-		var ll = temp.geometry.coordinates[1].toFixed(1);
-		c = [+ll,+la ];
+		// console.log(temp.geometry.coordinates[0].toFixed(2));
+		// console.log(temp.geometry.coordinates[1].toFixed(2));
+		// console.log(temp.properties.tag);
+		// var c = temp.geometry.coordinates;
+		var la = temp.geometry.coordinates[0].toFixed(3);
+		var ll = temp.geometry.coordinates[1].toFixed(3);
+		var c = [+ll,+la ];
 		console.log(c);
 		L.circle( c, 70, {
 		// L.circle( [37.3, -121.9] , 70, {
