@@ -10,16 +10,44 @@
 </head>
 <body>
 <!-- Main container -->
-<div class="container-fluid">
+<div class="row">
+<div class="col-xs-12">
+	<button class="tn btn-primary btn-lg" id="addpin" >Add pin</button>
+	<div id="layover" class="hidden">
+		<div class="row">
+		<div class="col-xs-12">
+			<div class="row">
+			<div class="col-xs-12 center-block">
+				<!-- <button class="tn btn-primary btn-lg" id="addpin" >Add pin</button> -->
+			</div>
+			</div>
+			<div class="editform  row">
+			<div class="col-xs-12">
+				<div class="row">
+				<div class="col-xs-6">
+					<button id="help">Help</button>
+				</div>
+				
+				<div class="col-xs-3">
+					<textarea id="comment"></textarea>
+				</div>
+				
+				<div class="col-xs-3">
+					<button class="btn btn-primary btn-lg di" disabled="disabled" id="submit" >submit</button>
+				</div>
 
+				</div>
+			</div>
+			</div>
+		</div>
+		</div>
+	</div>
 	<!-- Map Div -->
 	<div id="mapid"></div>
-	<button class="button" id="addpin" >Add pin</button>
-	<div class="editform hidden">
-		<textarea id="comment"></textarea>
-		<button class="button" id="submit" >submit</button>
-	</div>
 
+	
+
+</div>
 </div>
 <!-- END: main container -->
 

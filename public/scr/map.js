@@ -8,7 +8,13 @@
 // }
 // function LoadMap(position) {
 // // x.innerHTML = "Latitude: " + position.coords.latitude + "<br>Longitude: " + position.coords.longitude; 
-
+	
+	$('#mapid').css('height', $(window).innerHeight() );
+	// $('#layover').css('height', $(window).innerHeight() );
+	$(window).resize(function(){
+		$('#mapid').css('height', $(window).innerHeight() );
+	// $('#layover').css('height', $(window).innerHeight() );
+	})
 	var currentPin=[];
 
 	var mymap = L.map('mapid').setView([37.3,-121.9], 13);
@@ -21,7 +27,7 @@
 	}).addTo(mymap);
 
 
-	var marker = L.marker([37.3,-121.9]).addTo(mymap)
+	var marker = L.marker([37.3,-121.9])//.addTo(mymap)
 		.bindPopup("<b>Hello world!</b><br />I am a popup.");
 
 	// L.circle([51.508, -0.11], 500, {
@@ -46,6 +52,7 @@
 		console.log("hello");
 		function onMapClick(e) {
 			marker.setLatLng(e.latlng).addTo(mymap);
+			$('#submit').prop('disabled', false);
 			// popup
 			// 	.setLatLng(e.latlng)
 			// 	.setContent("You clicked the map at " + e.latlng.toString())
@@ -64,12 +71,16 @@
 					// console.log("hello");
 
 		editfuntion();
-		$(this).addClass('hidden').next('.editform').removeClass('hidden');
+		$(this).addClass('hidden');
+		$('#layover').removeClass('hidden');
+		$('#submit').prop('disabled', true);
+
 	});
 
 	// submit the pin
 	$("#submit").click(function(e){
-		$(this).parent('.editform').addClass('hidden').prev('#addpin').removeClass('hidden');
+		$(this).parents('#layover').addClass('hidden');
+		$('#addpin').removeClass('hidden');
 		submitpin();
 	});
 
@@ -87,7 +98,7 @@
 
 		mymap.clearAllEventListeners();
 
-		
+		console.dir({ 'logLat':  currentPin, 'comments': comment })
 
 	};
 
