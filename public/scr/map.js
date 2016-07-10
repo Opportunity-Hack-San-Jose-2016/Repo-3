@@ -181,7 +181,7 @@ var creatTweet = function(o){
           //_________________________done
 
 
-            _t = _t + '#'+city + ' #'+ state;
+            _t = _t + '#'+city + ' #'+ state +' #MercyCorp';
              $.post('/tweet', { tweet:_t }, function(data){
 				alert("tweeted ;) "+_t);
 			});
