@@ -8,7 +8,7 @@
 // }
 // function LoadMap(position) {
 // // x.innerHTML = "Latitude: " + position.coords.latitude + "<br>Longitude: " + position.coords.longitude; 
-	
+	var _t;
 	$('#mapid').css('height', $(window).innerHeight() );
 	// $('#layover').css('height', $(window).innerHeight() );
 	$(window).resize(function(){
@@ -101,8 +101,12 @@
 
 		mymap.clearAllEventListeners();
 
-		console.dir({ 'logLat':  currentPin, 'tag': tag })
+		creatTweet({tag:tag,location: currentPin});
 
+		console.dir({ 'logLat':  currentPin, 'tag': tag })
+		// $.post('/tweet', { tweet:Tweet }, function(data){
+		// 	alert("tweeted ;) "+Tweet);
+		// });
 	};
 	$('.btn-icon').click(function(e){
 		e.preventDefault();
@@ -139,7 +143,52 @@ var getColorCode = function(tag){
 	return color;
 }
 
+var creatTweet = function(o){
+	// console.dir(o);?lat='+o.location.lat+'&long='+o.location.lng
+	// $.getJSON('http://scatter-otl.rhcloud.com/location', {lat:o.location.lat,long:o.location.lng}, function(data){
+	// 	console.dir(data);
+	// });
+	_t='';
+	_t = _t + '#'+o.tag+' ';
+	displayLocation(o.location.lat,o.location.lng);
+		// t = "#"+tag + " ";
+	// return t;
+}
 
+      function displayLocation(latitude,longitude){
+        var request = new XMLHttpRequest();
+
+        var method = 'GET';
+        var url = 'http://maps.googleapis.com/maps/api/geocode/json?latlng='+latitude+','+longitude+'&sensor=true';
+        var async = true;
+
+        request.open(method, url, async);
+        request.onreadystatechange = function(){
+          if(request.readyState == 4 && request.status == 200){
+            var data = JSON.parse(request.responseText);
+            var address = data.results[0];
+
+            //__________________________fetching city and state
+        result=address.address_components;
+          var city='';
+          var state='';
+          for(var i=0;i<result.length;++i)
+          {
+              if(result[i].types[0]=="administrative_area_level_1"){city = result[i].long_name.trim().split(' ').join('');}
+              if(result[i].types[0]=="locality"){state = result[i].long_name.trim().split(' ').join('');}
+          }
+          // alert(info.join(','));
+          //_________________________done
+
+
+            _t = _t + '#'+city + ' #'+ state;
+             $.post('/tweet', { tweet:_t }, function(data){
+				alert("tweeted ;) "+_t);
+			});
+          }
+        };
+        request.send();
+      };
 
 
 
