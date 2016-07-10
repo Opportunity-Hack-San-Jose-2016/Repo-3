@@ -16,8 +16,8 @@ apt-get install git -y
 git clone https://github.com/Opportunity-Hack-San-Jose-2016/Repo-3.git
 # Installs Docker
 curl -sSL https://get.docker.com/ | sh
+# Download Docker Repo
 docker pull gladmapbeta/gladmap
+# Run GLADMap on port 80 and proxy it through host
 docker run -p 80:80 -d gladmapbeta/gladmap
-# cd Repo-3
-# Build Docker Image from Dockerfile
-# docker build .
+# Now visit the Local Server by browsing to: http://127.0.0.1
