@@ -2,7 +2,7 @@ body{
 	height: 500px;
 	background: #ccc;
 }
-#mapid{ height: 500px; }
+#mapid{ height: 300px; }
 
 .editmap{
     cursor:pointer;
