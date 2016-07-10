@@ -52,7 +52,7 @@
 		console.log("hello");
 		function onMapClick(e) {
 			marker.setLatLng(e.latlng).addTo(mymap);
-			$('#submit').prop('disabled', false);
+			$('.btn-icon').prop('disabled', false);
 			// popup
 			// 	.setLatLng(e.latlng)
 			// 	.setContent("You clicked the map at " + e.latlng.toString())
@@ -73,34 +73,71 @@
 		editfuntion();
 		$(this).addClass('hidden');
 		$('#layover').removeClass('hidden');
-		$('#submit').prop('disabled', true);
+		$('.btn-icon').prop('disabled', true);
 
 	});
 
 	// submit the pin
-	$("#submit").click(function(e){
-		$(this).parents('#layover').addClass('hidden');
-		$('#addpin').removeClass('hidden');
-		submitpin();
-	});
+	// $("#submit").click(function(e){
+	// 	$('#layover').addClass('hidden');
+	// 	$('#addpin').removeClass('hidden');
+	// 	submitpin();
+	// });
 
 	// map rendring when the pin is updated. 
-	var submitpin = function(){
+	var submitpin = function(tag){
+		$('#layover').addClass('hidden');
+		$('#addpin').removeClass('hidden');
+		
 		mymap.removeLayer(marker);
 		currentPin = marker.getLatLng()
 		var comment = $("#comment").val();
 		$("#comment").val('');
-		L.circle(currentPin, 50, {
-			color: 'red',
-			fillColor: '#f03',
-			fillOpacity: 0.5
-		}).addTo(mymap).bindPopup(comment);
+		L.circle(currentPin, 70, {
+			color: getColorCode(tag),
+			fillColor: getColorCode(tag),
+			fillOpacity: 1
+		}).addTo(mymap).bindPopup('#'+tag);
 
 		mymap.clearAllEventListeners();
 
-		console.dir({ 'logLat':  currentPin, 'comments': comment })
+		console.dir({ 'logLat':  currentPin, 'tag': tag })
 
 	};
+	$('.btn-icon').click(function(e){
+		e.preventDefault();
+		var tag = $(this).prop('id');
+		console.log("form submit");
+		submitpin(tag);
+	});
+
+	// $("#submitform").submit(function(e){
+
+	// 	e.preventDefault();
+	// 	console.log("form submit");
+	// 	submitpin();
+	// });
+
+var getColorCode = function(tag){
+	var color= '#ED2324';
+	switch(tag) {
+    case 'help':
+        color = '#ED2324'
+        break;
+    case 'hazard':
+        color = '#F49B33'
+        break;
+    case 'found':
+        color = '#62E16E'
+        break;
+    case 'supplies':
+        color = '#5056D5'
+        break;
+    default:
+        color = '#ED2324'
+	}
+	return color;
+}
 
 
 

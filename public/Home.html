@@ -12,29 +12,43 @@
 <!-- Main container -->
 <div class="row">
 <div class="col-xs-12">
-	<button class="tn btn-primary btn-lg" id="addpin" >Add pin</button>
+	<button class="tn btn-danger btn-lg" id="addpin" >Add pin</button>
 	<div id="layover" class="hidden">
 		<div class="row">
 		<div class="col-xs-12">
-			<div class="row">
-			<div class="col-xs-12 center-block">
-				<!-- <button class="tn btn-primary btn-lg" id="addpin" >Add pin</button> -->
-			</div>
-			</div>
+			
 			<div class="editform  row">
 			<div class="col-xs-12">
 				<div class="row">
-				<div class="col-xs-6">
-					<button id="help">Help</button>
+				<div class="col-xs-12">
+					<form id="submitform" class="form-inline">
+
+					<button type="submit" class="tn btn-danger btn-icon btn-lg" id="help"  >Help</button>
+					<button type="submit" class="tn btn-danger btn-icon btn-lg" id="hazard"  >Help</button>
+					<button type="submit" class="tn btn-danger btn-icon btn-lg" id="found"  >Help</button>
+					<button type="submit" class="tn btn-danger btn-icon btn-lg" id="supplies"  >Help</button>
+
 				</div>
 				
-				<div class="col-xs-3">
+				<div class="col-xs-4 hidden ">
+					<form id="submitform" class="form-inline">
+					  <div class="form-group">
+					    <label class="sr-only" for="comment">Comment</label>
+					    <input type="textarea" class="form-control" id="comment" placeholder="Tags">
+					  </div>
+					  
+					  
+					  <button type="submit" class="btn btn-danger" disabled="disabled" id="submit">Submit</button>
+					</form>
+				</div>
+
+				<!-- <div class="col-xs-3">
 					<textarea id="comment"></textarea>
 				</div>
 				
 				<div class="col-xs-3">
-					<button class="btn btn-primary btn-lg di" disabled="disabled" id="submit" >submit</button>
-				</div>
+					<button class="btn btn-danger btn-lg di" disabled="disabled" id="submit" >submit</button>
+				</div> -->
 
 				</div>
 			</div>
