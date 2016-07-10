@@ -2,4 +2,10 @@ body{
 	height: 500px;
 	background: #ccc;
 }
-#mapid { height: 180px; }
+#mapid{ height: 500px; }
+
+.editmap{
+    cursor:pointer;
+	cursor:hand;
+    /*background-image: url(/scr/marker-icon-2x.png);*/
+}
