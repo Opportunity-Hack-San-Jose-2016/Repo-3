@@ -6,7 +6,9 @@
   "dependencies": {
     "debug": "~2.2.0",
     "express": "~4.13.1",
-    "nodemon": "latest"
+    "nodemon": "latest",
+    "mongodb": "*",
+    "mongoose": "*"
   }
 }
 
