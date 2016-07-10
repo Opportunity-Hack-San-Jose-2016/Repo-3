@@ -6,7 +6,7 @@
     "start": "nodemon node.js localhost 80"
   },
   "dependencies": {
-    "body-parser": "*",
+    "body-parser": "~1.13.2",
     "cookie-parser": "~1.3.5",
     "debug": "~2.2.0",
     "express": "~4.13.1",

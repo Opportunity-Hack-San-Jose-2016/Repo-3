@@ -41,6 +41,7 @@
 	// 	[51.503, -0.06],
 	// 	[51.51, -0.047]
 	// ]).addTo(mymap).bindPopup("I am a polygon.");
+var temp = {type: "Feature", properties: {}, geometry: {type: "Point", coordinates: [75.87158203125, 30.70878122625409]}};
 
 
 	var popup = L.popup();
@@ -51,8 +52,8 @@
 	var editfuntion = function(){
 		console.log("hello");
 		function onMapClick(e) {
-			marker.setLatLng(e.latlng).addTo(mymap);
 			$('.btn-icon').prop('disabled', false);
+			marker.setLatLng(e.latlng).addTo(mymap);
 			// popup
 			// 	.setLatLng(e.latlng)
 			// 	.setContent("You clicked the map at " + e.latlng.toString())
@@ -97,13 +98,13 @@
 			color: getColorCode(tag),
 			fillColor: getColorCode(tag),
 			fillOpacity: 1
-		}).addTo(mymap).bindPopup('#'+tag).toGeoJSON();
+		}).addTo(mymap).bindPopup('#'+tag);
 
-		mymap.clearAllEventListeners();
+		// mymap.clearAllEventListeners();
 
 		creatTweet({tag:tag,location: currentPin});
 
-		console.dir(geoL);
+		// console.dir(geoL);
 
 		console.dir({ 'logLat':  currentPin, 'tag': tag })
 		// $.post('/tweet', { tweet:Tweet }, function(data){
