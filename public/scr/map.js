@@ -1,51 +1,93 @@
-// function getLocation() {
-//     if (navigator.geolocation) {
-//     	LoadMap([37.37695305874001,-121.92149060595777]);
-//         // navigator.geolocation.getCurrentPosition(LoadMap);
-//     } else {
-//         x.innerHTML = "Geolocation is not supported by this browser.";
+/***
+	integrate the Smap witht the functionality 
+**/
+
+// test -- intilization of the map function 
+Smap.init("mapid");
+
+Smap.addCtrl(function(){
+	console.log("click on the controller");
+},{
+	outerClass: "noshadow leaflet-draw-toolbar leaflet-bar", 
+	position: "bottomright", 
+	innnerClass: "tn btn-danger btn-lg addpin",
+	tag: "button"
+})
+
+// L.Control.RemoveAll = L.Control.extend(
+// {
+//     options:
+//     {
+//         position: 'bottomright',
+//     },
+//     onAdd: function (map) {
+//         var controlDiv = L.DomUtil.create('div', 'leaflet-draw-toolbar leaflet-bar');
+//         L.DomEvent
+//             .addListener(controlDiv, 'click', L.DomEvent.stopPropagation)
+//             .addListener(controlDiv, 'click', L.DomEvent.preventDefault)
+//         .addListener(controlDiv, 'click', function () {
+//             drawnItems.clearLayers();
+//         });
+
+//         var controlUI = L.DomUtil.create('a', 'leaflet-draw-edit-remove', controlDiv);
+//         controlUI.title = 'Remove All Polygons';
+//         controlUI.href = '#';
+//         return controlDiv;
 //     }
-// }
-// function LoadMap(position) {
-// // x.innerHTML = "Latitude: " + position.coords.latitude + "<br>Longitude: " + position.coords.longitude; 
+// });
+// var removeAllControl = new L.Control.RemoveAll();
+
+// var map = Smap.Smap();
+// map.addControl(removeAllControl);
+
+
+
+
+
+/*
+
+	// Resources for futher refrance 
+	// http://m.spotcrime.com/mobile/map/index.html#
+	// http://www.mylocalcrime.com/#37.327686%2C%20-121.8858
+
+	// Global variables 
 	var _t;
 	var _geoL;
+	
+	// set size for the map -- map its dimentions with the browser
 	$('#mapid').css('height', $(window).innerHeight() );
-	// $('#layover').css('height', $(window).innerHeight() );
 	$(window).resize(function(){
 		$('#mapid').css('height', $(window).innerHeight() );
-	// $('#layover').css('height', $(window).innerHeight() );
 	})
+
+	// current Pins
 	var currentPin=[];
 
-	var mymap = L.map('mapid').setView([37.3,-121.9], 13);
+	// set location to the current location 
+	var mymap = L.map('mapid').setView([51.505, -0.09], 13);
+	// var mymap = L.map('mapid').setView([geoplugin_latitude(),geoplugin_longitude()], 13);
 
-	// L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token=pk.eyJ1IjoibWlsYW5wYWxzaW5naCIsImEiOiJjaXFmb2VwbHIwM3FlZnJtMXR2NHJjcDBsIn0.vPN-24ZXoCTdATPYq3y_VA', {
-	L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+	// Loading the "open streat map" 
+	L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token=pk.eyJ1IjoibWlsYW5wYWxzaW5naCIsImEiOiJjaXFmb2VwbHIwM3FlZnJtMXR2NHJjcDBsIn0.vPN-24ZXoCTdATPYq3y_VA', {
+	// L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
 		maxZoom: 18,
 		attribution: 'Map data © <a href="http://openstreetmap.org">OpenStreetMap</a> contributors',
 		id: 'mapbox.streets'
 	}).addTo(mymap);
 
+	// L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
+	//     attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+	// }).addTo(mymap);
 
+	// curent position marker 
 	var marker = L.marker([37.3,-121.9])//.addTo(mymap)
 		.bindPopup("<b>Hello world!</b><br />I am a popup.");
 
-	// L.circle([51.508, -0.11], 500, {
-	// 	color: 'red',
-	// 	fillColor: '#f03',
-	// 	fillOpacity: 0.5
-	// }).addTo(mymap).bindPopup("I am a circle.");
-
-	// L.polygon([
-	// 	[51.509, -0.08],
-	// 	[51.503, -0.06],
-	// 	[51.51, -0.047]
-	// ]).addTo(mymap).bindPopup("I am a polygon.");
+// temporary point variable 
 var temp = {type: "Feature", properties: {}, geometry: {type: "Point", coordinates: [75.87158203125, 30.70878122625409]}};
 
 
-	var popup = L.popup();
+	// var popup = L.popup();
 	// function onMapClick(e) {};
 
 
@@ -255,6 +297,45 @@ $.post('/getpoints', {}, function(data){
 
 
 
+$.getJSON("scr/countries.geojson", function(data){
+	AddLayer(mymap, {
+		'geoJson': data 
+	})
+});
+
+var printCenter = function(){
+	console.log(mymap.getCenter());
+};
+
+// // put layer on the map
+// // var  countries;
+//  $.getJSON("scr/countries.geojson", function(data){
+// 	console.log("hello there after getting the geo jason");
+// 	var countries =  data;
+// 	function countriesStyle (feature){
+// 		return{
+// 			fillColor : 'red',
+// 			weight: 2,
+// 			opacity: 1,
+// 			color : 'white',
+// 			dashArray : 3,
+// 			fillOpacity : 0.7
+// 		}
+// 	}
+
+// 	// var map = L.map('map').setView([51.505, -0.09], 4);
+// 	// L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+// 	// {
+// 	//   attribution: 'Tiles by Mansi'
+
+// 	// }).addTo(map);
+// 	var countriesLayer = L.geoJson(
+// 		countries,
+// 		{style: countriesStyle}).addTo(mymap)
+
+// });
+// // console.log(countries);
+// // console.log(countries);
 
 
 
@@ -270,6 +351,4 @@ $.post('/getpoints', {}, function(data){
 
 
 
-
-
-// };
+// };*/

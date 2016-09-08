@@ -17,7 +17,9 @@ body{
 	/*cursor: url(marker-icon-2x.png), auto;*/
     /*background-image: url(/scr/marker-icon-2x.png);*/
 }
-
+.noshadow{
+    box-shadow: none !important;
+}
 #layover{
     position: absolute;
     bottom: 0;
@@ -34,12 +36,8 @@ body{
 textarea{
 	width: 90%;
 }
-#addpin{
-	position: absolute;
-    z-index: 100;
+.addpin{
     border-radius: 100%;
-    bottom: 50px;
-    right: 50px;
     width: 80px;
     height: 80px;
     background-image: url(map_icon-1.png);

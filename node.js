@@ -20,8 +20,8 @@ app.get('/', function (req, res) {
   res.redirect('Home.html');
 });
 
-app.listen(80, function () {
-  console.log('Example app listening on port 80!');
+app.listen(8000, function () {
+  console.log('Example app listening on port 8000!');
 });
 
 
